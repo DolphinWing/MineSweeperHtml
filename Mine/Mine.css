@@ -1,0 +1,108 @@
+body {
+}
+
+#divMineMap
+{}
+
+#divMineMap table
+{
+    background-color: #bbbbdd;
+    border-collapse: separate;
+    border: outset 3px #ffffff;
+}
+
+/*#divMineMap td,*/ .divMineMap_td,  .divMineMap_td_clicked,
+.divMineMap_td_hover,.divMineMap_td_hover_box, .divMineMap_td_neighbor, .divMineMap_td_neighbor_box
+.minebox_mine_clicked, .minebox_mine_noclick
+{
+    width: 20px;
+    height: 22px;
+    text-align: center;
+    vertical-align: middle;
+    background-color: #dddddd;
+    cursor: crosshair;
+    border-style: outset;
+    color: #000099;
+}
+.divMineMap_td
+{
+    background-image: url(box.gif);
+}
+.divMineMap_td_hover, .divMineMap_td_hover_box
+{
+    background-color: #ccebeb;
+}
+.divMineMap_td_hover_box
+{
+    background: url(box_hover.gif);
+}
+.divMineMap_td_neighbor, .divMineMap_td_neighbor_box
+{
+    background-color: #ddbbbb;
+}
+.divMineMap_td_neighbor_box
+{
+    text-align: center;
+    background-image: url(box_neighbor.gif);
+}
+.divMineMap_td_clicked
+{
+    background-color: #cccccc;
+}
+.minebox_mine_clicked
+{
+    text-align: center;
+    background-color: #ff3c5a;
+    background-image: url(mine_clicked.gif);
+}
+.minebox_mine_noclick
+{
+    text-align: center;
+    background-color: #99ccff;
+    background-image: url(mine_noclick.gif);
+}
+
+#divMineConfig
+{
+    position: absolute;
+    left: 20%;
+    top: 100px;
+    background-color: #b4e1ff;
+    z-index: 200;
+    width: 200px;
+    padding: 10px;
+    border: outset 2px #99bb99;
+}
+#divMineConfig table
+{
+    width: 100%;
+    text-align: center;
+    background-color: #ffffcc;
+    margin-bottom: 10px;
+}
+#divMineConfig td
+{
+    width: 50%;
+}
+
+input 
+{
+    width: 60px; 
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+#divMineMap
+{
+    display: block;
+}
+
+#divGameTestOutput 
+{
+    jdisplay: none;
+}
+#divGameTestOutput td
+{
+    width: 80px;
+    text-align: center;
+}

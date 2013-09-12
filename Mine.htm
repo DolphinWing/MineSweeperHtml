@@ -1,0 +1,148 @@
+﻿<html> 
+<head> 
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Mine Game</title> 
+	<link type="text/css" rel="stylesheet" rev="stylesheet" href="Mine/Mine.css" /> 
+</head> 
+<body onload="init_mine_game()"> 
+    <div style="text-align: center; width: 100%;"> 
+        <div id="divToolbar"> 
+            <input type="button" id="btGameNew" onclick="init_mine_game()" value="新遊戲" /> 
+            <input type="button" id="btGameConfig" onclick="show_config(event)" value="設定" /> 
+        </div> 
+        <div> 
+            <table style="width: 200px; text-align: center;" border="1"> 
+                <tr> 
+                    <td id="spanMines" style="width: 50%;">Mine: 0</td> 
+                    <td id="spanTimer">00:00</td> 
+                </tr> 
+            </table> 
+        </div> 
+        <div id="divMineMap"> 
+            <table><tr><td>javascript must be enabled</td></tr></table> 
+        </div> 
+        
+        <div id="divMineConfig" style="display: none;"> 
+            <table> 
+                <tr> 
+                    <td>高度(10-19)</td> 
+                    <td><input type="text" id="tMapHeight" value="10" style="width: 99%;" /></td> 
+                </tr> 
+                <tr> 
+                    <td>寬度(10-25)</td> 
+                    <td><input type="text" id="tMapWidth" value="10" style="width: 99%;" /></td> 
+                </tr> 
+                <tr> 
+                    <td>地雷數(1~)</td> 
+                    <td><input type="text" id="tMapMine" value="10" style="width: 99%;" /></td> 
+                </tr> 
+                <tr> 
+                    <td></td> 
+                    <td></td> 
+                </tr> 
+            </table> 
+            <input type="button" id="btConfigSubmit" onclick="set_config()" value="確定" /> 
+            <input type="button" id="btConfigCancel" onclick="hide_config()" value="取消" /> 
+        </div> 
+        <div id="divGameTestOutput"> 
+            <img src="Mine/box.GIF" /><img src="Mine/box_hover.GIF" /><img src="Mine/box_neighbor.GIF" /> 
+            <img src="Mine/mine_noclick.GIF" /><img src="Mine/mine_clicked.GIF" /> 
+        </div> 
+    </div> 
+</body> 
+<script type="text/javascript" src="Mine/Mine.js"></script> 
+<script type="text/javascript"> 
+	var ui_height = 0;
+	var ui_width = 0;
+	var ui_mine = 0;
+	
+	function init_mine_game() {
+		mine_game_set();    // finish the previous game
+
+		ui_height = document.getElementById("tMapHeight").value;
+		ui_width = document.getElementById("tMapWidth").value;
+		ui_mine = document.getElementById("tMapMine").value;
+
+		var text = init_mine_map(ui_height,ui_width,ui_mine);
+		//alert(text);
+		document.getElementById("divMineMap").innerHTML = text;
+	}
+	
+	function show_config(event) {//var event=window.event|arguments[0];//firefox fix
+		var divMineConfig = document.getElementById("divMineConfig");
+		var btConfigSubmit = document.getElementById("btConfigSubmit");
+		
+		document.getElementById("btGameNew").setAttribute("disabled", "disabled");
+		
+		divMineConfig.style.left = event.clientX;//btConfigSubmit.style.left;
+		divMineConfig.style.top = 40;
+		divMineConfig.style.display = "";
+	}
+	function hide_config() {
+		document.getElementById("tMapHeight").value = ui_height;
+		document.getElementById("tMapWidth").value = ui_width;
+		document.getElementById("tMapMine").value = ui_mine;
+		
+		document.getElementById("divMineConfig").style.display = "none";
+		
+		document.getElementById("btGameNew").removeAttribute("disabled");
+	}
+	function set_config() {
+//            http://plog.longwin.com.tw/programming/2007/08/23/javascript_match_replace_method_2007
+//            // 可參考: JavaScript match() Method http://www.w3schools.com/jsref/jsref_match.asp
+//            // stringObject.match(searchvalue) 
+//            // match 語法: variable.match(regex), return null/regex value 
+//            var score = 12; // 1.2, 1., 1, -1.2, -1, -1., -1.25, -12., -13, -133.235, 133.235 
+//            var regex = /^-?\d+\.?\d*?$/; 
+//            if (score.match(regex)==null) { 
+//                alert("不是數值"); 
+//            }
+
+		// check the number
+		var str = document.getElementById("tMapHeight").value;
+		var regex = /^-?\d+?$/; 
+		if (str.match(regex)==null) { 
+			alert("高度不是整數");
+			document.getElementById("tMapHeight").focus();
+			return;
+		}
+		str = document.getElementById("tMapWidth").value;
+		if (str.match(regex)==null) { 
+			alert("寬度不是整數");
+			document.getElementById("tMapWidth").focus();
+			return;
+		}
+		str = document.getElementById("tMapMine").value;
+		if (str.match(regex)==null) { 
+			alert("地雷數不是整數");
+			document.getElementById("tMapMine").focus();
+			return;
+		}
+		
+		ui_height = parseInt(document.getElementById("tMapHeight").value);
+		if (ui_height < 10 || ui_height > 19) { 
+			alert("高度不在範圍內");
+			document.getElementById("tMapHeight").focus();
+			return;
+		}
+		ui_width = parseInt(document.getElementById("tMapWidth").value);
+		if (ui_width < 10 || ui_width > 25) { 
+			alert("寬度不在範圍內");
+			document.getElementById("tMapHeight").focus();
+			return;
+		}
+		ui_mine = parseInt(document.getElementById("tMapMine").value);
+		if (ui_mine < 1 || ui_mine > ui_height*ui_width) { 
+			alert("地雷數不在範圍內");
+			document.getElementById("tMapHeight").focus();
+			return;
+		}
+		
+		init_mine_game();
+		hide_config();
+	}
+	
+	m_nGameTimerDivID = "spanTimer";
+	m_nGameMinesDivID = "spanMines";
+</script> 
+</html>
